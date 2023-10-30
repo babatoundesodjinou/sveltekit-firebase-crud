@@ -55,7 +55,7 @@
     {#if register}
       <div>
         <p>Already have an account?</p>
-        <p on:click={handleRegister} on:keydown={() => {}}>Login</p>
+        <p on:click={handleAuthenticate} on:keydown={() => {}}>Login</p>
       </div>
     {:else}
       <div>
@@ -76,7 +76,7 @@
     padding: 24px;
   }
 
-  form {
+   form {
     display: flex;
     flex-direction: column;
     gap: 14px;

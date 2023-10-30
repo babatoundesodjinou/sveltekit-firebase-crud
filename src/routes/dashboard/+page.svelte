@@ -1,5 +1,5 @@
 <script>
-    let todoList = ["Do the groceries"];
+    let todoList = [];
     let currTodo = '';
     let error = false;
 
@@ -12,22 +12,61 @@
         todoList = [...todoList, currTodo];
         currTodo = "";
     }
+
+    function editTodo(index){
+        let newTodoList = todoList.filter((val, i) =>{
+            return i !== index;
+        });
+
+        currTodo = todoList[index];
+        todoList = newTodoList;
+    }
+
+    function removeTodo(index){
+        let newTodoList = todoList.filter((val, i) =>{
+            return i !== index;
+        });
+
+        todoList = newTodoList;
+    }
+
 </script>
 
 <div class="mainContainer">
     <div class="headerContainer">
         <h1>Todo list</h1>
-        <button><p><i class="fa-regular fa-floppy-disk"></i></p>Save</button>
+        <div class="headerBtns">
+            <button>
+                <i class="fa-regular fa-floppy-disk"></i>
+                <p>Save</p>
+            </button>
+            
+            <button>
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <p>Logout</p>
+            </button>
+
+        </div>
     </div>
     <main>
+        {#if todoList.length === 0}
+            You have nothing to do
+        {/if}
+
         {#each todoList as todo, index}
             <div class="todo">
                 <p>
                     { index + 1 }. { todo }
                 </p>
                 <div class="actions">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    <i class="fa-regular fa-trash-can"></i>
+                    <i on:click={() =>{
+                        editTodo(index)
+                    }} 
+                    on:keydown={ () =>{} } class="fa-regular fa-pen-to-square"></i>
+                    <i   on:click={() =>{
+                        removeTodo(index)
+                    }} 
+                    on:keydown={ () =>{} } class="fa-regular fa-trash-can"></i>
                 </div>
             </div>
         {/each}
@@ -54,6 +93,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .headerBtns{
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
     }
 
     .headerContainer button{
@@ -97,6 +143,14 @@
         align-items: center;
         gap: 8px;
         font-size: 1.3rem;
+    }
+
+    .actions i {
+        cursor: pointer;
+    }
+
+    .actions i:hover{
+        color: coral;
     }
 
     .enterTodo{
